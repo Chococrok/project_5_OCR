@@ -38,7 +38,6 @@ public interface ComptabiliteManager {
 
     /**
      * Ajoute une référence à l'écriture comptable.
-     * <p>
      *  <strong>RG_Compta_5 : </strong>
      *  La référence d'une écriture comptable est composée du code du journal dans lequel figure l'écriture
      *  suivi de l'année et d'un numéro de séquence (propre à chaque journal) sur 5 chiffres incrémenté automatiquement
@@ -46,9 +45,8 @@ public interface ComptabiliteManager {
      *  <br>
      *  Ex : Journal de banque (BQ), écriture au 31/12/2016
      *  <pre>BQ-2016/00001</pre>
-     * </p>
      *
-     * <p><strong>Attention :</strong> l'écriture n'est pas enregistrée en persistance</p>
+     * <strong>Attention :</strong> l'écriture n'est pas enregistrée en persistance
      * @param pEcritureComptable L'écriture comptable concernée
      */
     void addReference(EcritureComptable pEcritureComptable);
