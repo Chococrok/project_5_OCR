@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer.db.helper;
+package com.dummy.myerp.consumer.dao.helper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

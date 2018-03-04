@@ -2,7 +2,9 @@ package com.dummy.myerp.consumer.dao.impl.cache;
 
 import java.util.List;
 
-import com.dummy.myerp.consumer.ConsumerHelper;
+import javax.inject.Inject;
+
+import com.dummy.myerp.consumer.dao.ComptabiliteDao;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 
 
@@ -15,14 +17,8 @@ public class JournalComptableDaoCache {
     /** The List compte comptable. */
     private List<JournalComptable> listJournalComptable;
 
-
-    // ==================== Constructeurs ====================
-    /**
-     * Instantiates a new Compte comptable dao cache.
-     */
-    public JournalComptableDaoCache() {
-    }
-
+    @Inject
+    private ComptabiliteDao comptabiliteDao;
 
     // ==================== Méthodes ====================
     /**
@@ -33,7 +29,7 @@ public class JournalComptableDaoCache {
      */
     public JournalComptable getByCode(String pCode) {
         if (listJournalComptable == null) {
-            listJournalComptable = ConsumerHelper.getDaoProxy().getComptabiliteDao().getListJournalComptable();
+            listJournalComptable = comptabiliteDao.getListJournalComptable();
         }
 
         JournalComptable vRetour = JournalComptable.getByCode(listJournalComptable, pCode);

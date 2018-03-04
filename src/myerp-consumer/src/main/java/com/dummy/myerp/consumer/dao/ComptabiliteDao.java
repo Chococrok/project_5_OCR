@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer.dao.contrat;
+package com.dummy.myerp.consumer.dao;
 
 import java.util.List;
 

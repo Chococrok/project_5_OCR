@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer.db;
+package com.dummy.myerp.consumer;
 
 /**
  * Enumération des Datasources utilisées par l'application

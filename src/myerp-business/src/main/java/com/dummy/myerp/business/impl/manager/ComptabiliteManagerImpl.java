@@ -24,27 +24,16 @@ import com.dummy.myerp.technical.exception.NotFoundException;
  */
 public class ComptabiliteManagerImpl extends AbstractBusinessManager implements ComptabiliteManager {
 
-    // ==================== Attributs ====================
-
-
-    // ==================== Constructeurs ====================
-    /**
-     * Instantiates a new Comptabilite manager.
-     */
-    public ComptabiliteManagerImpl() {
-    }
-
-
     // ==================== Getters/Setters ====================
     @Override
     public List<CompteComptable> getListCompteComptable() {
-        return getDaoProxy().getComptabiliteDao().getListCompteComptable();
+        return this.comptabiliteDao.getListCompteComptable();
     }
 
 
     @Override
     public List<JournalComptable> getListJournalComptable() {
-        return getDaoProxy().getComptabiliteDao().getListJournalComptable();
+        return this.comptabiliteDao.getListJournalComptable();
     }
 
     /**
@@ -52,7 +41,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     @Override
     public List<EcritureComptable> getListEcritureComptable() {
-        return getDaoProxy().getComptabiliteDao().getListEcritureComptable();
+        return this.comptabiliteDao.getListEcritureComptable();
     }
 
     /**
@@ -148,7 +137,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {
-                EcritureComptable vECRef = getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(
+                EcritureComptable vECRef = this.comptabiliteDao.getEcritureComptableByRef(
                     pEcritureComptable.getReference());
 
                 // S'il s'agit d'une nouvelle écriture, où alors si l'écriture remontée correspond à celle à vérifier...
@@ -168,13 +157,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     @Override
     public void insertEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
         this.checkEcritureComptable(pEcritureComptable);
-        TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
+        TransactionStatus vTS = this.transactionManager.beginTransactionMyERP();
         try {
-            getDaoProxy().getComptabiliteDao().insertEcritureComptable(pEcritureComptable);
-            getTransactionManager().commitMyERP(vTS);
+            this.comptabiliteDao.insertEcritureComptable(pEcritureComptable);
+            this.transactionManager.commitMyERP(vTS);
             vTS = null;
         } finally {
-            getTransactionManager().rollbackMyERP(vTS);
+            this.transactionManager.rollbackMyERP(vTS);
         }
     }
 
@@ -183,13 +172,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     @Override
     public void updateEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
-        TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
+        TransactionStatus vTS = this.transactionManager.beginTransactionMyERP();
         try {
-            getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
-            getTransactionManager().commitMyERP(vTS);
+            this.comptabiliteDao.updateEcritureComptable(pEcritureComptable);
+            this.transactionManager.commitMyERP(vTS);
             vTS = null;
         } finally {
-            getTransactionManager().rollbackMyERP(vTS);
+            this.transactionManager.rollbackMyERP(vTS);
         }
     }
 
@@ -198,13 +187,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     @Override
     public void deleteEcritureComptable(Integer pId) {
-        TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
+        TransactionStatus vTS = this.transactionManager.beginTransactionMyERP();
         try {
-            getDaoProxy().getComptabiliteDao().deleteEcritureComptable(pId);
-            getTransactionManager().commitMyERP(vTS);
+            this.comptabiliteDao.deleteEcritureComptable(pId);
+            this.transactionManager.commitMyERP(vTS);
             vTS = null;
         } finally {
-            getTransactionManager().rollbackMyERP(vTS);
+            this.transactionManager.rollbackMyERP(vTS);
         }
     }
 }

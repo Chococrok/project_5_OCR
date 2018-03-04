@@ -2,7 +2,9 @@ package com.dummy.myerp.consumer.dao.impl.cache;
 
 import java.util.List;
 
-import com.dummy.myerp.consumer.ConsumerHelper;
+import javax.inject.Inject;
+
+import com.dummy.myerp.consumer.dao.ComptabiliteDao;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 
 
@@ -14,14 +16,9 @@ public class CompteComptableDaoCache {
     // ==================== Attributs ====================
     /** The List compte comptable. */
     private List<CompteComptable> listCompteComptable;
-
-
-    // ==================== Constructeurs ====================
-    /**
-     * Instantiates a new Compte comptable dao cache.
-     */
-    public CompteComptableDaoCache() {
-    }
+    
+    @Inject
+    private ComptabiliteDao comptabiliteDao;
 
 
     // ==================== Méthodes ====================
@@ -33,7 +30,7 @@ public class CompteComptableDaoCache {
      */
     public CompteComptable getByNumero(Integer pNumero) {
         if (listCompteComptable == null) {
-            listCompteComptable = ConsumerHelper.getDaoProxy().getComptabiliteDao().getListCompteComptable();
+            listCompteComptable = comptabiliteDao.getListCompteComptable();
         }
 
         CompteComptable vRetour = CompteComptable.getByNumero(listCompteComptable, pNumero);

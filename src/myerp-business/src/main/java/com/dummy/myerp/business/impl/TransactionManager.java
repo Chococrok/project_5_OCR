@@ -1,5 +1,8 @@
 package com.dummy.myerp.business.impl;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -8,41 +11,13 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 /**
  * <p>Classe de gestion des Transactions de persistance</p>
  */
+@Named
 public class TransactionManager {
 
     // ==================== Attributs Static ====================
     /** PlatformTransactionManager pour le DataSource MyERP */
+	@Inject
     private static PlatformTransactionManager ptmMyERP;
-
-
-    // ==================== Constructeurs ====================
-    /** Instance unique de la classe (design pattern Singleton) */
-    private static final TransactionManager INSTANCE = new TransactionManager();
-    /**
-     * Renvoie l'instance unique de la classe (design pattern Singleton).
-     *
-     * @return {@link TransactionManager}
-     */
-    public static TransactionManager getInstance() {
-        return TransactionManager.INSTANCE;
-    }
-    /**
-     * Renvoie l'instance unique de la classe (design pattern Singleton).
-     *
-     * @param pPtmMyERP -
-     * @return {@link TransactionManager}
-     */
-    public static TransactionManager getInstance(PlatformTransactionManager pPtmMyERP) {
-        ptmMyERP = pPtmMyERP;
-        return TransactionManager.INSTANCE;
-    }
-    /**
-     * Constructeur.
-     */
-    protected TransactionManager() {
-        super();
-    }
-
 
     // ==================== Méthodes ====================
     /**

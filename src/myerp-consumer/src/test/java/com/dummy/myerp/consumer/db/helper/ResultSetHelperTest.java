@@ -1,6 +1,9 @@
 package com.dummy.myerp.consumer.db.helper;
 
 import org.junit.Test;
+
+import com.dummy.myerp.consumer.dao.helper.ResultSetHelper;
+
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Assert;
 import static org.mockito.Mockito.*;

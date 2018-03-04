@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer.db;
+package com.dummy.myerp.consumer.dao.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,41 +7,22 @@ import javax.sql.DataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
-import com.dummy.myerp.consumer.ConsumerHelper;
-import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
+
+import com.dummy.myerp.consumer.DataSourcesEnum;
 
 /**
  * <p>
  * Classe mère des classes de Consumer DB
  * </p>
  */
-public abstract class AbstractDbConsumer {
+public abstract class AbstractDao {
 
 	// ==================== Attributs Static ====================
 	/** Logger Log4j pour la classe */
-	private static final Logger LOGGER = LogManager.getLogger(AbstractDbConsumer.class);
+	private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
 
 	/** Map des DataSources */
 	private static Map<DataSourcesEnum, DataSource> mapDataSource;
-
-	// ==================== Constructeurs ====================
-
-	/**
-	 * Constructeur.
-	 */
-	protected AbstractDbConsumer() {
-		super();
-	}
-
-	// ==================== Getters/Setters ====================
-	/**
-	 * Renvoie une {@link DaoProxy}
-	 *
-	 * @return {@link DaoProxy}
-	 */
-	protected static DaoProxy getDaoProxy() {
-		return ConsumerHelper.getDaoProxy();
-	}
 
 	// ==================== Méthodes ====================
 	/**

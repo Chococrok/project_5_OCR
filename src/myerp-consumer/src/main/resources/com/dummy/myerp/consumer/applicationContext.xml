@@ -23,29 +23,6 @@
 		</property>
 	</bean>
 
-
-	<!-- ==================== Consumer-Proxy ==================== -->
-
-	<!-- ConsumerHelper -->
-	<bean
-		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetClass" value="com.dummy.myerp.consumer.ConsumerHelper" />
-		<property name="targetMethod" value="configure" />
-		<property name="arguments">
-			<list>
-				<ref bean="DaoProxy" />
-			</list>
-		</property>
-	</bean>
-
-
-	<!-- DaoProxy -->
-	<bean id="DaoProxy" class="com.dummy.myerp.consumer.dao.impl.DaoProxyImpl"
-		factory-method="getInstance">
-		<property name="comptabiliteDao" ref="ComptabiliteDaoImpl" />
-	</bean>
-
-
 	<!-- ==================== Databases ==================== -->
 	<bean id="dataSourceMYERP" class="com.dummy.myerp.technical.util.spring.NullFactoryBean">
 		<constructor-arg value="javax.sql.DataSource" />
