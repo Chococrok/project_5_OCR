@@ -48,9 +48,9 @@
 
     <links>
     	<item name="MyERP" href="http://www.dummy.com/myerp"/>
-    </links>-->
+    </links>
 
-    <footer>All rights reserved to ${project.organization.name}</footer>
+    <footer>All rights reserved to ${project.organization.name}</footer>-->
 
   </body>
 </project>

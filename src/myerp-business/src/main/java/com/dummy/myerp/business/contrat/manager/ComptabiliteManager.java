@@ -7,7 +7,6 @@ import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 
-
 /**
  * Interface du manager du package comptabilite.
  */
