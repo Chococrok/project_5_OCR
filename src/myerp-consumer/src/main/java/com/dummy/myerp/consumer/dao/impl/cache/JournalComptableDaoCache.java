@@ -7,32 +7,36 @@ import javax.inject.Inject;
 import com.dummy.myerp.consumer.dao.ComptabiliteDao;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 
-
 /**
  * Cache DAO de {@link JournalComptable}
  */
 public class JournalComptableDaoCache {
 
-    // ==================== Attributs ====================
-    /** The List compte comptable. */
-    private List<JournalComptable> listJournalComptable;
+	// ==================== Attributs ====================
+	/** The List compte comptable. */
+	private List<JournalComptable> listJournalComptable;
 
-    @Inject
-    private ComptabiliteDao comptabiliteDao;
+	private ComptabiliteDao comptabiliteDao;
 
-    // ==================== Méthodes ====================
-    /**
-     * Gets by code.
-     *
-     * @param pCode le code du {@link JournalComptable}
-     * @return {@link JournalComptable} ou {@code null}
-     */
-    public JournalComptable getByCode(String pCode) {
-        if (listJournalComptable == null) {
-            listJournalComptable = comptabiliteDao.getListJournalComptable();
-        }
+	@Inject
+	public void setComptabiliteDao(ComptabiliteDao comptabiliteDao) {
+		this.comptabiliteDao = comptabiliteDao;
+	}
 
-        JournalComptable vRetour = JournalComptable.getByCode(listJournalComptable, pCode);
-        return vRetour;
-    }
+	// ==================== Méthodes ====================
+	/**
+	 * Gets by code.
+	 *
+	 * @param pCode
+	 *            le code du {@link JournalComptable}
+	 * @return {@link JournalComptable} ou {@code null}
+	 */
+	public JournalComptable getByCode(String pCode) {
+		if (listJournalComptable == null) {
+			listJournalComptable = comptabiliteDao.getListJournalComptable();
+		}
+
+		JournalComptable vRetour = JournalComptable.getByCode(listJournalComptable, pCode);
+		return vRetour;
+	}
 }

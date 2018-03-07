@@ -10,7 +10,7 @@
 
 	<!-- ========== ComptabiliteDaoImpl ========== -->
 	<bean id="ComptabiliteDaoImpl"
-		class="com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl">
+		class="com.dummy.myerp.consumer.dao.impl.ComptabiliteDaoImpl">
 		<property name="SQLgetListCompteComptable">
 			<value>
 				SELECT * FROM myerp.compte_comptable

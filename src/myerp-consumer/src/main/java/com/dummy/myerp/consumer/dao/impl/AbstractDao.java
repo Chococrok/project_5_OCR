@@ -22,7 +22,7 @@ public abstract class AbstractDao {
 	private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
 
 	/** Map des DataSources */
-	private static Map<DataSourcesEnum, DataSource> mapDataSource;
+	private Map<DataSourcesEnum, DataSource> mapDataSource;
 
 	// ==================== Méthodes ====================
 	/**
@@ -74,12 +74,12 @@ public abstract class AbstractDao {
 	 * @param pMapDataSource
 	 *            -
 	 */
-	public static void configure(Map<DataSourcesEnum, DataSource> pMapDataSource) {
+	public void configure(Map<DataSourcesEnum, DataSource> pMapDataSource) {
 		// On pilote l'ajout avec l'Enum et on ne rajoute pas tout à l'aveuglette...
 		// ( pas de AbstractDbDao.mapDataSource.putAll(...) )
 		Map<DataSourcesEnum, DataSource> vMapDataSource = new HashMap<>(DataSourcesEnum.values().length);
-		DataSourcesEnum[] vDataSourceIds = DataSourcesEnum.values();
-		for (DataSourcesEnum vDataSourceId : vDataSourceIds) {
+		
+		for (DataSourcesEnum vDataSourceId : DataSourcesEnum.values()) {
 			DataSource vDataSource = pMapDataSource.get(vDataSourceId);
 			// On test si la DataSource est configurée
 			// (NB : elle est considérée comme configurée si elle est dans pMapDataSource
