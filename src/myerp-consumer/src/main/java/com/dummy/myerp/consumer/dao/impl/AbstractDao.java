@@ -22,7 +22,14 @@ public abstract class AbstractDao {
 	private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
 
 	/** Map des DataSources */
-	private Map<DataSourcesEnum, DataSource> mapDataSource;
+	protected Map<DataSourcesEnum, DataSource> mapDataSource;
+	
+	public AbstractDao() {};
+
+	public AbstractDao(Map<DataSourcesEnum, DataSource> mapDataSource) {
+		this.mapDataSource = mapDataSource;
+	};
+	
 
 	// ==================== Méthodes ====================
 	/**

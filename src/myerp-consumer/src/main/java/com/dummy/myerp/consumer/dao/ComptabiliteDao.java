@@ -12,6 +12,8 @@ import com.dummy.myerp.technical.exception.NotFoundException;
  * Interface de DAO des objets du package Comptabilite
  */
 public interface ComptabiliteDao {
+	
+	void iAmAlive();
 
     /**
      * Renvoie la liste des Comptes Comptables

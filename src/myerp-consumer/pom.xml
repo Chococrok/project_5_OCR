@@ -37,6 +37,7 @@
 	<!-- Properties -->
 	<!-- =============================================================== -->
 	<properties>
+		<java.version>1.8</java.version>
 	</properties>
 
 
@@ -60,10 +61,17 @@
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 
-		<!-- spring-context : for component injection -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+		</dependency>
+
+		<!-- bonneCP -->
+		<dependency>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+			<version>0.7.1.RELEASE</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
@@ -75,9 +83,27 @@
 
 
 		<!-- ========== Test Dependencies ========== -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>5.0.4.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.15.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -96,13 +122,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>2.15.0</version>
-			<scope>test</scope>
-		</dependency>
 
 	</dependencies>
 
@@ -145,6 +164,43 @@
 						<directory>src/test-consumer/resources</directory>
 					</testResource>
 				</testResources>
+			</build>
+		</profile>
+
+		<profile>
+			<activation>
+				<property>
+					<name>integration.test</name>
+					<value>true</value>
+				</property>
+			</activation>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.7.0</version>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>3.0.2</version>
+						<configuration>
+							<archive>
+								<manifest>
+									<addClasspath>false</addClasspath>
+									<mainClass>com.dummy.myerp.consumer.it.ConsumerIntegrationTest</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</plugin>
+				</plugins>
 			</build>
 		</profile>
 	</profiles>

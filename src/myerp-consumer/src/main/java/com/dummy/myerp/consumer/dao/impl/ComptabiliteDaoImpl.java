@@ -2,11 +2,14 @@ package com.dummy.myerp.consumer.dao.impl;
 
 import java.sql.Types;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Named;
+import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -25,12 +28,41 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 /**
  * Implémentation de l'interface {@link ComptabiliteDao}
  */
-@Named
 public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao {
+	
+	private RowMapper<CompteComptable> compteComptableRM;
+	private RowMapper<EcritureComptable> ecritureComptableRM;
+	private RowMapper<JournalComptable> journalComptableRM;
+	private RowMapper<LigneEcritureComptable> ligneEcritureComptableRM;
+	
+	public ComptabiliteDaoImpl(Map<DataSourcesEnum, DataSource> mapDataSource) {
+		super(mapDataSource);
+	};
+	
+	
+	public void setCompteComptableRM(RowMapper<CompteComptable> compteComptableRM) {
+		this.compteComptableRM = compteComptableRM;
+	}
+
+	public void setEcritureComptableRM(RowMapper<EcritureComptable> ecritureComptableRM) {
+		this.ecritureComptableRM = ecritureComptableRM;
+	}
+
+	public void setJournalComptableRM(RowMapper<JournalComptable> journalComptableRM) {
+		this.journalComptableRM = journalComptableRM;
+	}
+
+	public void setLigneEcritureComptableRM(RowMapper<LigneEcritureComptable> ligneEcritureComptableRM) {
+		this.ligneEcritureComptableRM = ligneEcritureComptableRM;
+	}
 
 	// ==================== Méthodes ====================
 	/** SQLgetListCompteComptable */
 	private static String SQLgetListCompteComptable;
+	
+	public void iAmAlive() {
+		System.out.print("################## iAmAlive");
+	}
 
 	public void setSQLgetListCompteComptable(String pSQLgetListCompteComptable) {
 		SQLgetListCompteComptable = pSQLgetListCompteComptable;
@@ -39,8 +71,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 	@Override
 	public List<CompteComptable> getListCompteComptable() {
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
-		CompteComptableRM vRM = new CompteComptableRM();
-		List<CompteComptable> vList = vJdbcTemplate.query(SQLgetListCompteComptable, vRM);
+		List<CompteComptable> vList = vJdbcTemplate.query(SQLgetListCompteComptable, this.compteComptableRM);
 		return vList;
 	}
 
@@ -54,8 +85,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 	@Override
 	public List<JournalComptable> getListJournalComptable() {
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
-		JournalComptableRM vRM = new JournalComptableRM();
-		List<JournalComptable> vList = vJdbcTemplate.query(SQLgetListJournalComptable, vRM);
+		List<JournalComptable> vList = vJdbcTemplate.query(SQLgetListJournalComptable, this.journalComptableRM);
 		return vList;
 	}
 
@@ -71,8 +101,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 	@Override
 	public List<EcritureComptable> getListEcritureComptable() {
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
-		EcritureComptableRM vRM = new EcritureComptableRM();
-		List<EcritureComptable> vList = vJdbcTemplate.query(SQLgetListEcritureComptable, vRM);
+		List<EcritureComptable> vList = vJdbcTemplate.query(SQLgetListEcritureComptable, this.ecritureComptableRM);
 		
 		for (EcritureComptable vBean : vList) {
 			
@@ -94,10 +123,9 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("id", pId);
-		EcritureComptableRM vRM = new EcritureComptableRM();
 		EcritureComptable vBean;
 		try {
-			vBean = vJdbcTemplate.queryForObject(SQLgetEcritureComptable, vSqlParams, vRM);
+			vBean = vJdbcTemplate.queryForObject(SQLgetEcritureComptable, vSqlParams, this.ecritureComptableRM);
 			
 			// Chargement des lignes d'écriture
 			this.loadListLigneEcriture(vBean);
@@ -119,10 +147,9 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("reference", pReference);
-		EcritureComptableRM vRM = new EcritureComptableRM();
 		EcritureComptable vBean;
 		try {
-			vBean = vJdbcTemplate.queryForObject(SQLgetEcritureComptableByRef, vSqlParams, vRM);
+			vBean = vJdbcTemplate.queryForObject(SQLgetEcritureComptableByRef, vSqlParams, this.ecritureComptableRM);
 		
 			// Chargement des lignes d'écriture
 			this.loadListLigneEcriture(vBean);
@@ -144,8 +171,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("ecriture_id", pEcritureComptable.getId());
-		LigneEcritureComptableRM vRM = new LigneEcritureComptableRM();
-		List<LigneEcritureComptable> vList = vJdbcTemplate.query(SQLloadListLigneEcriture, vSqlParams, vRM);
+		List<LigneEcritureComptable> vList = vJdbcTemplate.query(SQLloadListLigneEcriture, vSqlParams, this.ligneEcritureComptableRM);
 		pEcritureComptable.getListLigneEcriture().clear();
 		pEcritureComptable.getListLigneEcriture().addAll(vList);
 	}

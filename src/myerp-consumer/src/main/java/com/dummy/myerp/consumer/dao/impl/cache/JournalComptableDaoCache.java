@@ -18,8 +18,9 @@ public class JournalComptableDaoCache {
 
 	private ComptabiliteDao comptabiliteDao;
 
-	@Inject
-	public void setComptabiliteDao(ComptabiliteDao comptabiliteDao) {
+	public JournalComptableDaoCache() {}
+	
+	public JournalComptableDaoCache(ComptabiliteDao comptabiliteDao) {
 		this.comptabiliteDao = comptabiliteDao;
 	}
 
