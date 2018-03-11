@@ -132,11 +132,12 @@
 	<profiles>
 		<!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
 		<profile>
-			<id>test-consumer</id>
+			<id>integration-test</id>
 			<build>
 				<plugins>
-					<!-- Ajout du répertoire src/test-consumer/java en tant que source de 
+					<!-- Ajout du répertoire src/integration/java en tant que source de 
 						test du module -->
+
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
@@ -149,58 +150,22 @@
 								</goals>
 								<configuration>
 									<sources>
-										<source>src/test-consumer/java</source>
+										<source>src/integration/java</source>
 									</sources>
 								</configuration>
 							</execution>
 						</executions>
 					</plugin>
 				</plugins>
+
 				<testResources>
 					<testResource>
 						<directory>src/test/resources</directory>
 					</testResource>
 					<testResource>
-						<directory>src/test-consumer/resources</directory>
+						<directory>src/integration/resources</directory>
 					</testResource>
 				</testResources>
-			</build>
-		</profile>
-
-		<profile>
-			<activation>
-				<property>
-					<name>integration.test</name>
-					<value>true</value>
-				</property>
-			</activation>
-
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<version>3.7.0</version>
-						<configuration>
-							<source>1.8</source>
-							<target>1.8</target>
-						</configuration>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jar-plugin</artifactId>
-						<version>3.0.2</version>
-						<configuration>
-							<archive>
-								<manifest>
-									<addClasspath>false</addClasspath>
-									<mainClass>com.dummy.myerp.consumer.it.ConsumerIntegrationTest</mainClass>
-								</manifest>
-							</archive>
-						</configuration>
-					</plugin>
-				</plugins>
 			</build>
 		</profile>
 	</profiles>
