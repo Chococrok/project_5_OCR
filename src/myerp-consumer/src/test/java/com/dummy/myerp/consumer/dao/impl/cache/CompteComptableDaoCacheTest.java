@@ -15,22 +15,32 @@ import org.junit.Assert;
 public class CompteComptableDaoCacheTest {
 
 	@Test
-	public void methodToTest() {
-//		CompteComptableDaoCache compteComptableDaoCache = new CompteComptableDaoCache();
-//		
-//		ArrayList<CompteComptable> list = new ArrayList<CompteComptable>();
-//		list.add(new CompteComptable(1, "foo"));
-//		list.add(new CompteComptable(2, "bar"));
-//		list.add(new CompteComptable(3, "foobar"));
-//		
-//		ComptabiliteDao comptabiliteDao = new ComptabiliteDaoImpl();
-//		when(comptabiliteDao.getListCompteComptable()).thenReturn(list);
-//		
-//		compteComptableDaoCache.setComptabiliteDao(comptabiliteDao);
-//		
-//		Integer number = 1;
-//
-//		Assert.assertEquals("foo", compteComptableDaoCache.getByNumero(number).getLibelle());
+	public void getListCompteComptableTest() {
+
+		ArrayList<CompteComptable> list = new ArrayList<CompteComptable>();
+		list.add(new CompteComptable(1, "foo"));
+		list.add(new CompteComptable(2, "bar"));
+		list.add(new CompteComptable(3, "foobar"));
+
+		ArrayList<CompteComptable> otherList = new ArrayList<CompteComptable>();
+		otherList.add(new CompteComptable(1, "boo"));
+		otherList.add(new CompteComptable(2, "far"));
+		otherList.add(new CompteComptable(3, "boofar"));
+
+		ComptabiliteDao comptabiliteDao = mock(ComptabiliteDaoImpl.class);
+		when(comptabiliteDao.getListCompteComptable())
+			.thenReturn(list)
+			.thenReturn(otherList);
+
+		CompteComptableDaoCache compteComptableDaoCache = new CompteComptableDaoCache(comptabiliteDao);
+
+		Integer number = 1;
+		Assert.assertEquals("foo", compteComptableDaoCache.getByNumero(number).getLibelle());
+
+		Assert.assertEquals("boo", comptabiliteDao.getListCompteComptable().get(0).getLibelle());
+
+		Assert.assertEquals("foo", compteComptableDaoCache.getByNumero(number).getLibelle());
+		
 	}
 
 }
