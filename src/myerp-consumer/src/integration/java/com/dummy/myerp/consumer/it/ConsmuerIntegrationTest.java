@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,7 +22,7 @@ public class ConsmuerIntegrationTest {
 
 	@Inject
 	ComptabiliteDao comptabiliteDao;
-
+	
 	@Test
 	public void printSomthing() throws NotFoundException {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@");
@@ -32,28 +33,34 @@ public class ConsmuerIntegrationTest {
 
 	@Test
 	public void getListCompteComptableTest() {
-		String test = this.comptabiliteDao.getListCompteComptable().get(0).getLibelle();
-		System.out.println("99999999999999999999" + test);
+		List<CompteComptable> compteComptables = this.comptabiliteDao.getListCompteComptable();
+		Assert.assertEquals(7, compteComptables.size());
 	}
 
 	@Test
 	public void getListJournalComptableTest() {
-
+		List<JournalComptable> journalComptables = this.comptabiliteDao.getListJournalComptable();
+		Assert.assertEquals(4, journalComptables.size());
 	}
 
 	@Test
 	public void getListEcritureComptableTest() {
-
+		List<EcritureComptable> ecritureComptables = this.comptabiliteDao.getListEcritureComptable();
+		Assert.assertEquals(5, ecritureComptables.size());
 	}
 
 	@Test
 	public void getEcritureComptableTest() throws NotFoundException {
-
+		EcritureComptable ecritureComptable = this.comptabiliteDao.getEcritureComptable(-1);
+		Assert.assertEquals("Cartouches d’imprimante", ecritureComptable.getLibelle());
+		Assert.assertEquals("AC-2016/00001", ecritureComptable.getReference());
 	}
 
 	@Test
 	public void getEcritureComptableByRefTest() throws NotFoundException {
-
+		EcritureComptable ecritureComptable = this.comptabiliteDao.getEcritureComptableByRef("AC-2016/00001");
+		Assert.assertEquals("Cartouches d’imprimante", ecritureComptable.getLibelle());
+		Assert.assertTrue(-1 == ecritureComptable.getId());
 	}
 
 	@Test

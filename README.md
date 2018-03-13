@@ -38,3 +38,8 @@ Il comporte :
     docker-compose stop
     docker-compose rm -v
     docker-compose up
+    
+### Access to container in psql mode
+
+	docker-compose exec myerp.db psql -U usr_myerp db_myerp
+	
