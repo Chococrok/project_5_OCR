@@ -3,10 +3,16 @@ package com.dummy.myerp.consumer.it;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
+
+import java.io.FileInputStream;
+
+import org.apache.commons.io.IOUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
+import org.junit.BeforeClass;;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -18,18 +24,10 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
-public class ConsmuerIntegrationTest {
+public class ConsmuerIntegrationReadTest extends AbstractIntegrationTest {
 
 	@Inject
 	ComptabiliteDao comptabiliteDao;
-	
-	@Test
-	public void printSomthing() throws NotFoundException {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@");
-		comptabiliteDao.iAmAlive();
-		EcritureComptable e = this.comptabiliteDao.getEcritureComptable(-2);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@" + e);
-	}
 
 	@Test
 	public void getListCompteComptableTest() {
@@ -65,22 +63,10 @@ public class ConsmuerIntegrationTest {
 
 	@Test
 	public void loadListLigneEcritureTest() {
-
-	}
-
-	@Test
-	public void insertEcritureComptableTest() {
-
-	}
-
-	@Test
-	public void updateEcritureComptableTest() {
-
-	}
-
-	@Test
-	public void deleteEcritureComptableTest() {
-
+		EcritureComptable ecritureComptable = new EcritureComptable();
+		ecritureComptable.setId(-1);
+		
+		this.comptabiliteDao.loadListLigneEcriture(ecritureComptable);
 	}
 
 }

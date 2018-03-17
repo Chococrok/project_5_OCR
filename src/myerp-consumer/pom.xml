@@ -107,6 +107,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+
 		<!-- ===== Database (pour les tests) ===== -->
 		<!-- Pool de connexion -->
 		<dependency>
@@ -154,18 +162,24 @@
 									</sources>
 								</configuration>
 							</execution>
+
+							<execution>
+								<id>add-resource</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>add-resource</goal>
+								</goals>
+								<configuration>
+									<resources>
+										<resource>
+											<directory>src/integration/resources</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
 						</executions>
 					</plugin>
 				</plugins>
-
-				<testResources>
-					<testResource>
-						<directory>src/test/resources</directory>
-					</testResource>
-					<testResource>
-						<directory>src/integration/resources</directory>
-					</testResource>
-				</testResources>
 			</build>
 		</profile>
 	</profiles>
