@@ -13,8 +13,6 @@ import com.dummy.myerp.technical.exception.NotFoundException;
  */
 public interface ComptabiliteDao {
 	
-	void iAmAlive();
-
     /**
      * Renvoie la liste des Comptes Comptables
      * @return {@link List}

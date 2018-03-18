@@ -19,7 +19,7 @@ public abstract class AbstractDao {
 
 	// ==================== Attributs Static ====================
 	/** Logger Log4j pour la classe */
-	private static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
+	protected static final Logger LOGGER = LogManager.getLogger(AbstractDao.class);
 
 	/** Map des DataSources */
 	protected Map<DataSourcesEnum, DataSource> mapDataSource;

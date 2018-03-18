@@ -59,10 +59,6 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 	// ==================== Méthodes ====================
 	/** SQLgetListCompteComptable */
 	private static String SQLgetListCompteComptable;
-	
-	public void iAmAlive() {
-		System.out.print("################## iAmAlive");
-	}
 
 	public void setSQLgetListCompteComptable(String pSQLgetListCompteComptable) {
 		SQLgetListCompteComptable = pSQLgetListCompteComptable;
@@ -70,6 +66,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public List<CompteComptable> getListCompteComptable() {
+		LOGGER.info("performing getListCompteComptable...");
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
 		List<CompteComptable> vList = vJdbcTemplate.query(SQLgetListCompteComptable, this.compteComptableRM);
 		return vList;
@@ -84,6 +81,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public List<JournalComptable> getListJournalComptable() {
+		LOGGER.info("performing getListJournalComptable...");
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
 		List<JournalComptable> vList = vJdbcTemplate.query(SQLgetListJournalComptable, this.journalComptableRM);
 		return vList;
@@ -100,6 +98,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public List<EcritureComptable> getListEcritureComptable() {
+		LOGGER.info("performing getListEcritureComptable...");
 		JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
 		List<EcritureComptable> vList = vJdbcTemplate.query(SQLgetListEcritureComptable, this.ecritureComptableRM);
 		
@@ -120,6 +119,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public EcritureComptable getEcritureComptable(Integer pId) throws NotFoundException {
+		LOGGER.info("performing getEcritureComptable...");
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("id", pId);
@@ -144,6 +144,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public EcritureComptable getEcritureComptableByRef(String pReference) throws NotFoundException {
+		LOGGER.info("performing getEcritureComptableByRef...");
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("reference", pReference);
@@ -168,6 +169,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public void loadListLigneEcriture(EcritureComptable pEcritureComptable) {
+		LOGGER.info("performing loadListLigneEcriture...");
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("ecriture_id", pEcritureComptable.getId());
@@ -187,6 +189,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public void insertEcritureComptable(EcritureComptable pEcritureComptable) {
+		LOGGER.info("performing insertEcritureComptable...");
 		// ===== Ecriture Comptable
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
@@ -249,6 +252,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public void updateEcritureComptable(EcritureComptable pEcritureComptable) {
+		LOGGER.info("performing updateEcritureComptable...");
 		// ===== Ecriture Comptable
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
@@ -276,6 +280,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 
 	@Override
 	public void deleteEcritureComptable(Integer pId) {
+		LOGGER.info("performing deleteEcritureComptable...");
 		// ===== Suppression des lignes d'écriture
 		this.deleteListLigneEcritureComptable(pId);
 

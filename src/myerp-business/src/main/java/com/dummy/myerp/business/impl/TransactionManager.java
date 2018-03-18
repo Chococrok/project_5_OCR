@@ -17,7 +17,7 @@ public class TransactionManager {
     // ==================== Attributs Static ====================
     /** PlatformTransactionManager pour le DataSource MyERP */
 	@Inject
-    private static PlatformTransactionManager ptmMyERP;
+    private PlatformTransactionManager ptmMyERP;
 
     // ==================== Méthodes ====================
     /**

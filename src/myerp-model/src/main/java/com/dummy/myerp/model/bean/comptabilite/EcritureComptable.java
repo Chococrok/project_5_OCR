@@ -75,13 +75,18 @@ public class EcritureComptable {
     public List<LigneEcritureComptable> getListLigneEcriture() {
         return listLigneEcriture;
     }
+    public void addOneListLigneEcriture(LigneEcritureComptable listLigneEcritureComptable) {
+        this.listLigneEcriture.add(listLigneEcritureComptable);
+    }
+    public void addManyListLigneEcriture(List<LigneEcritureComptable> ligneEcritureComptable) {
+        this.listLigneEcriture.addAll(ligneEcritureComptable);
+    }
 
     /**
      * Calcul et renvoie le total des montants au débit des lignes d'écriture
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
      */
-    // TODO à tester
     public BigDecimal getTotalDebit() {
         BigDecimal vRetour = BigDecimal.ZERO;
         for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
