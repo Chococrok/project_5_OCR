@@ -1,4 +1,4 @@
-package com.dummy.myerp.consumer.it;
+package com.dummy.myerp.business.it;
 
 import java.util.List;
 
@@ -20,7 +20,6 @@ import com.dummy.myerp.consumer.dao.ComptabiliteDao;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -68,20 +67,6 @@ public class ConsmuerIntegrationReadTest extends AbstractIntegrationTest {
 		ecritureComptable.setId(-1);
 		
 		this.comptabiliteDao.loadListLigneEcriture(ecritureComptable);
-	}
-	
-	@Test
-	public void getSequenceEcritureComptableByJournalCodeAndByAnneTest() {
-		SequenceEcritureComptable sequenceEcritureComptable;
-		sequenceEcritureComptable = this.comptabiliteDao.getSequenceEcritureComptableByJournalCodeAndByAnne("AC", 2016);
-	
-		Assert.assertEquals("AC", sequenceEcritureComptable.getJournalCode());
-		Assert.assertEquals(2016, sequenceEcritureComptable.getAnnee().intValue());
-		Assert.assertEquals(40, sequenceEcritureComptable.getDerniereValeur().intValue());
-		
-		sequenceEcritureComptable = this.comptabiliteDao.getSequenceEcritureComptableByJournalCodeAndByAnne("AC", 2032);
-	
-		Assert.assertNull(sequenceEcritureComptable);
 	}
 
 }

@@ -102,14 +102,23 @@
 				:ecriture_id
 			</value>
 		</property>
-
+		<property name="SQLgetsequenceEcritureComptableByJournalCodeAndByAnne">
+			<value>
+				SELECT * FROM myerp.sequence_ecriture_comptable WHERE
+				journal_code = :journal_code AND annee = :annee;
+			</value>
+		</property>
+		
 		<property name="ecritureComptableRM" ref="ecritureComptableRM"></property>
 		<property name="ligneEcritureComptableRM" ref="ligneEcritureComptableRM"></property>
+		<property name="sequenceEcritureComptableRM">
+			<bean class="com.dummy.myerp.consumer.rowmapper.SequenceEcritureComptableRM"/>
+		</property>
 		<property name="compteComptableRM">
-			<bean class="com.dummy.myerp.consumer.rowmapper.CompteComptableRM"/>
+			<bean class="com.dummy.myerp.consumer.rowmapper.CompteComptableRM" />
 		</property>
 		<property name="journalComptableRM">
-			<bean class="com.dummy.myerp.consumer.rowmapper.JournalComptableRM"/>
+			<bean class="com.dummy.myerp.consumer.rowmapper.JournalComptableRM" />
 		</property>
 	</bean>
 

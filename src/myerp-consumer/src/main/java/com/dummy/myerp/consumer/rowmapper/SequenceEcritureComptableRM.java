@@ -1,0 +1,24 @@
+package com.dummy.myerp.consumer.rowmapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
+
+
+/**
+ * {@link RowMapper} de {@link CompteComptable}
+ */
+public class SequenceEcritureComptableRM implements RowMapper<SequenceEcritureComptable> {
+
+    @Override
+    public SequenceEcritureComptable mapRow(ResultSet pRS, int pRowNum) throws SQLException {
+    	SequenceEcritureComptable vBean = new SequenceEcritureComptable();
+        vBean.setAnnee(pRS.getInt("annee"));
+        vBean.setDerniereValeur(pRS.getInt("derniere_valeur"));
+        vBean.setJournalCode(pRS.getString("journal_code"));
+
+        return vBean;
+    }
+}

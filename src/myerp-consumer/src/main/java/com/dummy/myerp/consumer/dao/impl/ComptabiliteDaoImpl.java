@@ -19,10 +19,12 @@ import com.dummy.myerp.consumer.rowmapper.CompteComptableRM;
 import com.dummy.myerp.consumer.rowmapper.EcritureComptableRM;
 import com.dummy.myerp.consumer.rowmapper.JournalComptableRM;
 import com.dummy.myerp.consumer.rowmapper.LigneEcritureComptableRM;
+import com.dummy.myerp.consumer.rowmapper.SequenceEcritureComptableRM;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 /**
@@ -34,6 +36,7 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 	private RowMapper<EcritureComptable> ecritureComptableRM;
 	private RowMapper<JournalComptable> journalComptableRM;
 	private RowMapper<LigneEcritureComptable> ligneEcritureComptableRM;
+	private RowMapper<SequenceEcritureComptable> sequenceEcritureComptableRM;
 	
 	public ComptabiliteDaoImpl(Map<DataSourcesEnum, DataSource> mapDataSource) {
 		super(mapDataSource);
@@ -55,6 +58,12 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 	public void setLigneEcritureComptableRM(RowMapper<LigneEcritureComptable> ligneEcritureComptableRM) {
 		this.ligneEcritureComptableRM = ligneEcritureComptableRM;
 	}
+
+	public void setSequenceEcritureComptableRM(RowMapper<SequenceEcritureComptable> sequenceEcritureComptableRM) {
+		this.sequenceEcritureComptableRM = sequenceEcritureComptableRM;
+	}
+
+
 
 	// ==================== Méthodes ====================
 	/** SQLgetListCompteComptable */
@@ -310,5 +319,34 @@ public class ComptabiliteDaoImpl extends AbstractDao implements ComptabiliteDao 
 		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
 		vSqlParams.addValue("ecriture_id", pEcritureId);
 		vJdbcTemplate.update(SQLdeleteListLigneEcritureComptable, vSqlParams);
+	}
+	
+//	New methods ====================
+//	================================
+	
+	private String SQLgetsequenceEcritureComptableByJournalCodeAndByAnne;
+	public void setSQLgetsequenceEcritureComptableByJournalCodeAndByAnne(String SQLgetsequenceEcritureComptableByJournalCodeAndByAnne) {
+		this.SQLgetsequenceEcritureComptableByJournalCodeAndByAnne = SQLgetsequenceEcritureComptableByJournalCodeAndByAnne;
+	}
+	
+	@Override
+	public SequenceEcritureComptable getSequenceEcritureComptableByJournalCodeAndByAnne(String journalCode, int annee) {
+		LOGGER.info("performing getSequenceEcritureComptableByJournalCodeAndByAnne...");
+		
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+		
+		MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+		vSqlParams.addValue("journal_code", journalCode);
+		vSqlParams.addValue("annee", annee);
+		
+		SequenceEcritureComptable vBean;
+		
+		try {
+			vBean = vJdbcTemplate.queryForObject(SQLgetsequenceEcritureComptableByJournalCodeAndByAnne, vSqlParams, this.sequenceEcritureComptableRM);
+
+		} catch (EmptyResultDataAccessException vEx) {
+			return null;
+		}
+		return vBean;
 	}
 }

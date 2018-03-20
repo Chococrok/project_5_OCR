@@ -5,5 +5,13 @@
                            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
 	<!-- ========== Transaction Managers ========== -->
-	<import resource="transactionContext.xml" />
+	<import resource="comptabiliteDaoImpl.xml"/>
+	<import resource="compteComptableDaoCache.xml"/>
+	<import resource="ecritureComptableRM.xml"/>
+	<import resource="journalComptableDaoCache.xml"/>
+	<import resource="ligneEcritureComptableRM.xml"/>
+	<import resource="mainDataSource.xml"/>
+	<import resource="transactionManager.xml" />
+	<import resource="txManagerMYERP.xml"/>
+	
 </beans>

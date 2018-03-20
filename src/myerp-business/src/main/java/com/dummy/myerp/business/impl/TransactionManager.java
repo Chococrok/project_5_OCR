@@ -11,13 +11,15 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 /**
  * <p>Classe de gestion des Transactions de persistance</p>
  */
-@Named
 public class TransactionManager {
 
     // ==================== Attributs Static ====================
     /** PlatformTransactionManager pour le DataSource MyERP */
-	@Inject
     private PlatformTransactionManager ptmMyERP;
+    
+    public TransactionManager(PlatformTransactionManager ptmMyERP) {
+    	this.ptmMyERP = ptmMyERP;
+    }
 
     // ==================== Méthodes ====================
     /**
