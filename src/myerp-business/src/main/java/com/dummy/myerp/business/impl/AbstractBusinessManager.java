@@ -6,12 +6,18 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.dummy.myerp.consumer.dao.ComptabiliteDao;
 
 /**
  * <p>Classe mère des Managers</p>
  */
 public abstract class AbstractBusinessManager {
+	
+	/** Logger Log4j pour la classe */
+	protected static final Logger LOGGER = LogManager.getLogger(AbstractBusinessManager.class);
 
     @Inject
     protected ComptabiliteDao comptabiliteDao;

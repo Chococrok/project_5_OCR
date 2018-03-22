@@ -1,10 +1,8 @@
 package com.dummy.myerp.business.impl;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
@@ -44,7 +42,7 @@ public class TransactionManager {
      *
      * @param pTStatus retrouné par la méthode {@link #beginTransactionMyERP()}
      */
-    public void commitMyERP(TransactionStatus pTStatus) {
+    public void commitMyERP(TransactionStatus pTStatus) throws TransactionException {
         if (pTStatus != null) {
             ptmMyERP.commit(pTStatus);
         }
@@ -55,7 +53,7 @@ public class TransactionManager {
      *
      * @param pTStatus retrouné par la méthode {@link #beginTransactionMyERP()}
      */
-    public void rollbackMyERP(TransactionStatus pTStatus) {
+    public void rollbackMyERP(TransactionStatus pTStatus) throws TransactionException {
         if (pTStatus != null) {
             ptmMyERP.rollback(pTStatus);
         }

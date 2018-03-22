@@ -8,6 +8,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
@@ -178,8 +179,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             this.comptabiliteDao.updateEcritureComptable(pEcritureComptable);
             this.transactionManager.commitMyERP(vTS);
             vTS = null;
-        } finally {
+        } catch(TransactionException e) {
+        	LOGGER.error(e);
+        } 
+        
+        try {
             this.transactionManager.rollbackMyERP(vTS);
+        } catch(TransactionException e) {
+        	LOGGER.error(e);
         }
     }
 
@@ -193,8 +200,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             this.comptabiliteDao.deleteEcritureComptable(pId);
             this.transactionManager.commitMyERP(vTS);
             vTS = null;
-        } finally {
+        } catch(TransactionException e) {
+        	LOGGER.error(e);
+        } 
+        
+        try {
             this.transactionManager.rollbackMyERP(vTS);
+        } catch(TransactionException e) {
+        	LOGGER.error(e);
         }
     }
 }
