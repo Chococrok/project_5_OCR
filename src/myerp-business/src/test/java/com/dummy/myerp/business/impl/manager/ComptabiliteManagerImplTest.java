@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import org.junit.Test;
+import org.junit.Assert;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
@@ -69,6 +70,15 @@ public class ComptabiliteManagerImplTest {
                                                                                  null, new BigDecimal(123),
                                                                                  null));
         manager.checkEcritureComptableUnit(vEcritureComptable);
+    }
+    
+    @Test
+    public void buildReferenceTest() {
+    	String ref = this.manager.buildReference("AC", 2018, 1);
+    	Assert.assertEquals("AC-2018/00001", ref);
+    	
+    	ref = this.manager.buildReference("AC", 2018, 111);
+    	Assert.assertEquals("AC-2018/00111", ref);
     }
 
 }

@@ -4,8 +4,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
-	<!-- ==================== Consumer ==================== -->
-	<!-- ComptabiliteDao -->
 	<bean id="comptabiliteDaoImpl" class="com.dummy.myerp.consumer.dao.impl.ComptabiliteDaoImpl">
 		<constructor-arg>
 			<map>
@@ -102,7 +100,6 @@
 				:ecriture_id
 			</value>
 		</property>
-		
 		<property name="SQLgetsequenceEcritureComptableByJournalCodeAndByAnne">
 			<value>
 				SELECT * FROM myerp.sequence_ecriture_comptable WHERE
@@ -112,23 +109,29 @@
 		<property name="SQLinsertSequenceEcritureComptable">
 			<value>
 				INSERT INTO myerp.sequence_ecriture_comptable (journal_code,
-				annee, derniere_valeur) VALUES(:journal_code, :annee, :derniere_valeur);
+				annee, derniere_valeur) VALUES(:journal_code, :annee,
+				:derniere_valeur);
 			</value>
 		</property>
 		<property name="SQLupdateSequenceEcritureComptable">
 			<value>
 				UPDATE myerp.sequence_ecriture_comptable SET derniere_valeur =
-				:derniere_valeur WHERE journal_code = :journal_code AND annee = :annee;
+				:derniere_valeur WHERE journal_code = :journal_code AND annee =
+				:annee;
 			</value>
 		</property>
 
 		<property name="ecritureComptableRM" ref="ecritureComptableRM"></property>
 		<property name="ligneEcritureComptableRM" ref="ligneEcritureComptableRM"></property>
+		<property name="sequenceEcritureComptableRM">
+			<bean
+				class="com.dummy.myerp.consumer.rowmapper.SequenceEcritureComptableRM" />
+		</property>
 		<property name="compteComptableRM">
-			<bean class="com.dummy.myerp.consumer.rowmapper.CompteComptableRM"/>
+			<bean class="com.dummy.myerp.consumer.rowmapper.CompteComptableRM" />
 		</property>
 		<property name="journalComptableRM">
-			<bean class="com.dummy.myerp.consumer.rowmapper.JournalComptableRM"/>
+			<bean class="com.dummy.myerp.consumer.rowmapper.JournalComptableRM" />
 		</property>
 	</bean>
 

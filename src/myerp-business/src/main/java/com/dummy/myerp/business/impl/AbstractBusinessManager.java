@@ -19,13 +19,19 @@ public abstract class AbstractBusinessManager {
 	/** Logger Log4j pour la classe */
 	protected static final Logger LOGGER = LogManager.getLogger(AbstractBusinessManager.class);
 
-    @Inject
     protected ComptabiliteDao comptabiliteDao;
     
-    @Inject
     protected TransactionManager transactionManager;
+    
+    public AbstractBusinessManager() {};
 
-    /**
+	public AbstractBusinessManager(ComptabiliteDao comptabiliteDao, TransactionManager transactionManager) {
+		super();
+		this.comptabiliteDao = comptabiliteDao;
+		this.transactionManager = transactionManager;
+	}
+
+	/**
      * Renvoie un {@link Validator} de contraintes
      *
      * @return Validator

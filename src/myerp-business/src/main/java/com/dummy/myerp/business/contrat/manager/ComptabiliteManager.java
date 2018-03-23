@@ -6,11 +6,14 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.NotFoundException;
 
 /**
  * Interface du manager du package comptabilite.
  */
 public interface ComptabiliteManager {
+	
+	EcritureComptable getEcritureComptable(int id) throws NotFoundException;
 
     /**
      * Renvoie la liste des comptes comptables.
@@ -80,4 +83,5 @@ public interface ComptabiliteManager {
      * @param pId l'id de l'écriture
      */
     void deleteEcritureComptable(Integer pId);
+
 }
