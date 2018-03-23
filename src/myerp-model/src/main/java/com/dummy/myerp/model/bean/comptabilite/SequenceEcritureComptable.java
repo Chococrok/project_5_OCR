@@ -20,15 +20,20 @@ public class SequenceEcritureComptable {
     public SequenceEcritureComptable() {
     }
 
-    /**
-     * Constructeur
-     *
-     * @param pAnnee -
-     * @param pDerniereValeur -
-     */
     public SequenceEcritureComptable(Integer pAnnee, Integer pDerniereValeur) {
         annee = pAnnee;
         derniereValeur = pDerniereValeur;
+    }
+    
+    public SequenceEcritureComptable(Integer pAnnee, String journalCode) {
+        this.annee = pAnnee;
+        this.journalCode = journalCode;
+    }
+    
+    public SequenceEcritureComptable(String journalCode, Integer pAnnee, Integer pDerniereValeur) {
+    	this.journalCode = journalCode;
+    	this.annee = pAnnee;
+        this.derniereValeur = pDerniereValeur;
     }
 
 

@@ -14,10 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dummy.myerp.consumer.dao.ComptabiliteDao;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -74,6 +71,20 @@ public class ConsmuerIntegrationCreateTest extends AbstractIntegrationTest {
 		Assert.assertEquals(eCToInsert.getLibelle(), eCInserted.getLibelle());
 		Assert.assertEquals(eCToInsert.getReference(), eCInserted.getReference());
 		Assert.assertEquals(eCToInsert.getListLigneEcriture().size(), eCInserted.getListLigneEcriture().size());
+	}
+	
+	@Test
+	public void insertSequenceEcritureComptableTest() {
+		SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable("AC", 2018, 1);
+		SequenceEcritureComptable sequenceEcritureComptableInserted = null;
+		
+		this.comptabiliteDao.insertSequenceEcritureComptable(sequenceEcritureComptable);
+		
+			sequenceEcritureComptableInserted = this.comptabiliteDao.getSequenceEcritureComptableByJournalCodeAndByAnne("AC", 2018);
+		Assert.assertNotNull(sequenceEcritureComptableInserted);
+		Assert.assertEquals("AC", sequenceEcritureComptableInserted.getJournalCode());
+		Assert.assertEquals(2018, sequenceEcritureComptableInserted.getAnnee().intValue());
+		Assert.assertEquals(1, sequenceEcritureComptableInserted.getDerniereValeur().intValue());
 	}
 
 }

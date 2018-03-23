@@ -87,4 +87,8 @@ public interface ComptabiliteDao {
     // new methods
     // ===========
 	SequenceEcritureComptable getSequenceEcritureComptableByJournalCodeAndByAnne(String journalCode, int annee);
+
+	void insertSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable);
+
+	void updateSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable);
 }

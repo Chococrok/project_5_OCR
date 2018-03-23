@@ -108,11 +108,24 @@
 				journal_code = :journal_code AND annee = :annee;
 			</value>
 		</property>
-		
+		<property name="SQLinsertSequenceEcritureComptable">
+			<value>
+				INSERT INTO myerp.sequence_ecriture_comptable (journal_code,
+				annee, derniere_valeur) VALUES(:journal_code, :annee, :derniere_valeur);
+			</value>
+		</property>
+		<property name="SQLupdateSequenceEcritureComptable">
+			<value>
+				UPDATE myerp.sequence_ecriture_comptable SET derniere_valeur =
+				:derniere_valeur WHERE journal_code = :journal_code AND annee = :annee;
+			</value>
+		</property>
+
 		<property name="ecritureComptableRM" ref="ecritureComptableRM"></property>
 		<property name="ligneEcritureComptableRM" ref="ligneEcritureComptableRM"></property>
 		<property name="sequenceEcritureComptableRM">
-			<bean class="com.dummy.myerp.consumer.rowmapper.SequenceEcritureComptableRM"/>
+			<bean
+				class="com.dummy.myerp.consumer.rowmapper.SequenceEcritureComptableRM" />
 		</property>
 		<property name="compteComptableRM">
 			<bean class="com.dummy.myerp.consumer.rowmapper.CompteComptableRM" />
