@@ -26,8 +26,9 @@ import com.dummy.myerp.technical.exception.NotFoundException;
  */
 public class ComptabiliteManagerImpl extends AbstractBusinessManager implements ComptabiliteManager {
 
-	public ComptabiliteManagerImpl() {};
-	
+	public ComptabiliteManagerImpl() {
+	};
+
 	public ComptabiliteManagerImpl(ComptabiliteDao comptabiliteDao, TransactionManager transactionManager) {
 		super(comptabiliteDao, transactionManager);
 	}
@@ -36,7 +37,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	public EcritureComptable getEcritureComptable(int id) throws NotFoundException {
 		return this.comptabiliteDao.getEcritureComptable(id);
 	}
-	
+
 	@Override
 	public List<CompteComptable> getListCompteComptable() {
 		return this.comptabiliteDao.getListCompteComptable();
@@ -58,13 +59,12 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	/**
 	 * {@inheritDoc}
 	 */
-	// TODO à tester
 	@Override
 	public synchronized void addReference(EcritureComptable pEcritureComptable) {
 		LOGGER.debug("adding Reference...");
-		
+
 		boolean newSequence = false;
-		
+
 		String journalCode = pEcritureComptable.getJournal().getCode();
 		Date date = pEcritureComptable.getDate();
 		Calendar calendar = Calendar.getInstance();
@@ -73,39 +73,27 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
 		SequenceEcritureComptable sequenceEcritureComptable = this.comptabiliteDao
 				.getSequenceEcritureComptableByJournalCodeAndByAnne(journalCode, annee);
-		
+
 		if (sequenceEcritureComptable == null) {
 			LOGGER.debug("sequenceEcritureComptable not found, a new one will be added");
-			
+
 			sequenceEcritureComptable = new SequenceEcritureComptable(journalCode, annee, 0);
 			newSequence = true;
 		}
-		
+
 		int derniereValeur = sequenceEcritureComptable.getDerniereValeur();
 		derniereValeur++;
-		
+
 		sequenceEcritureComptable.setDerniereValeur(derniereValeur);
-		
+
 		if (newSequence) {
 			this.comptabiliteDao.insertSequenceEcritureComptable(sequenceEcritureComptable);
 		} else {
 			this.comptabiliteDao.updateSequenceEcritureComptable(sequenceEcritureComptable);
 		}
 		String ref = this.buildReference(journalCode, annee, derniereValeur);
-		
-		pEcritureComptable.setReference(ref);
-		// TODO à implémenter
-		// Bien se réferer à la JavaDoc de cette méthode !
-		/*
-		 * Le principe : 1. Remonter depuis la persitance la dernière valeur de la
-		 * séquence du journal pour l'année de l'écriture (table
-		 * sequence_ecriture_comptable) 2. * S'il n'y a aucun enregistrement pour le
-		 * journal pour l'année concernée : 1. Utiliser le numéro 1. Sinon : 1. Utiliser
-		 * la dernière valeur + 1 3. Mettre à jour la référence de l'écriture avec la
-		 * référence calculée (RG_Compta_5) 4. Enregistrer (insert/update) la valeur de
-		 * la séquence en persitance (table sequence_ecriture_comptable)
-		 */
 
+		pEcritureComptable.setReference(ref);
 	}
 
 	/**
@@ -133,6 +121,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 		// ===== Vérification des contraintes unitaires sur les attributs de l'écriture
 		Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
 		if (!vViolations.isEmpty()) {
+			for(ConstraintViolation violation : vViolations) {
+				LOGGER.error("Invalide value: " + violation.getInvalidValue());
+				LOGGER.error("Message: " + violation.getMessage());
+				LOGGER.error("class: " + violation.getRootBeanClass());
+				LOGGER.error("property: " + violation.getPropertyPath());
+				
+			}
 			throw new FunctionalException("L'écriture comptable ne respecte pas les règles de gestion.",
 					new ConstraintViolationException(
 							"L'écriture comptable ne respecte pas les contraintes de validation", vViolations));
@@ -165,9 +160,28 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 					"L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
 		}
 
-		// TODO ===== RG_Compta_5 : Format et contenu de la référence
+		// RG_Compta_5 : Format et contenu de la référence
 		// vérifier que l'année dans la référence correspond bien à la date de
 		// l'écriture, idem pour le code journal...
+
+		String ref = pEcritureComptable.getReference();
+
+		String journalCode = pEcritureComptable.getJournal().getCode();
+		Date date = pEcritureComptable.getDate();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int annee = calendar.get(Calendar.YEAR);
+
+		if (!ref.substring(3, 7).equals(String.valueOf(annee))) {
+			throw new FunctionalException(
+					"L'année de la référence ne correspond pas à la date de l'écrituce comptable.");
+		}
+		
+		if (!ref.substring(0,2).equals(journalCode)) {
+			
+			throw new FunctionalException(
+					"Le code du journal ne correspond pas à la référence.");
+		}
 	}
 
 	/**
@@ -255,14 +269,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 			LOGGER.error(e);
 		}
 	}
-	
+
 	String buildReference(String journalCode, int annee, int derniereValeur) {
 		StringBuilder referenceBuilder = new StringBuilder(journalCode);
 		referenceBuilder.append("-");
 		referenceBuilder.append(annee);
 		referenceBuilder.append("/");
 		referenceBuilder.append(derniereValeur);
-		
+
 		while (referenceBuilder.length() < 13) {
 			referenceBuilder.insert(8, "0");
 		}
