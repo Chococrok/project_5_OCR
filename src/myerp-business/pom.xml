@@ -128,7 +128,7 @@
 	<profiles>
 		<!-- Profile utilisé pour lancer les tests d'intégration de la couche Business -->
 		<profile>
-			<id>test-business</id>
+			<id>integration-test</id>
 			<build>
 				<plugins>
 					<!-- Ajout du répertoire src/test-business/java en tant que source de 
