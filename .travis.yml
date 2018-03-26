@@ -1,2 +1,9 @@
+sudo: required
 language: java
-script: mvn -f ./src/pom.xml clean install
+
+services:
+  - docker
+
+install: docker-compose -f './docker/dev/docker-compose.yml' up -d
+ 
+script: mvn -f ./src/pom.xml clean test -Pintegration-test
