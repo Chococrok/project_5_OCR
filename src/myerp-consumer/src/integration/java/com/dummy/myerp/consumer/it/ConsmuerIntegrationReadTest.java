@@ -3,16 +3,10 @@ package com.dummy.myerp.consumer.it;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
-
-import java.io.FileInputStream;
-
-import org.apache.commons.io.IOUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
-import org.junit.BeforeClass;;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
